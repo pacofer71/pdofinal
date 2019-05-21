@@ -100,7 +100,7 @@ spl_autoload_register(function($nombre){
                             echo "<form name='br' action='delete.php' method='POST' >";
                             echo "<input type='hidden' value='{$_SESSION['token']}' name='token' />";
                             echo "<input type='hidden' name='id' value='{$item[0]}' />";
-                            echo "<a href='updatep.php?id={$item[0]}' class='btn btn-info'>Modificar</a>";
+                            echo "<a href='mplataforma.php?id={$item[0]}' class='btn btn-info'>Modificar</a>";
                             echo "&nbsp;&nbsp;<input type='submit' value='Borrar' class='btn btn-danger' />";
                             echo "</form>";
                             echo "</td>";

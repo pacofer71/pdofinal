@@ -36,7 +36,7 @@ function generarToken() {
         echo "</form>";
         echo "</div>";
         ?>
-        <h3 class='text-center mt-3'>Crear Plataforma</h3>
+        <h3 class='text-center mt-3'>Modificar Plataforma</h3>
         <?php
             if(isset($_SESSION['errorp'])){
                 echo "<div class='container text-danger'>";

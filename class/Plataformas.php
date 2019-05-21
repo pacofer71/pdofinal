@@ -100,4 +100,19 @@ class Plataformas {
     }
 
 //-------------------------
+public function verPlataforma($id){
+    $consulta="select nombre, imagen from plataformas where id=:cod";
+    $stmt=$this->conexion->prepare($consulta);
+    try{
+        $stmt->execute([
+            ':cod'=>$id
+        ]);
+    }catch(PDOException $ex){
+        die("Error al recuperar una plataforma!!! ".$ex->getMessage());
+    }
+    $fila=$stmt->fetch(PDO::FETCH_OBJ);
+    return $fila;
+
+}
+//----------------------------------------------------------------------
 }
