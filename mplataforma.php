@@ -63,12 +63,17 @@ spl_autoload_register(function($nombre) {
                     <div class="col">
                         <input type="text" class="form-control" value='<?php echo $nombre ?>' name='nombre' required />
                     </div>
-                    
+                </div>    
+                    <?php
+                        if isset($_GET['im']){ ?>
+                    <div class="from-row">    
                     <div class="col">
                         <label for="im"><b>Imagen:&nbsp;</b></label>
                         <input type="file" name='imagen' id='im' />
                     </div>
-                </div>
+                    </div>
+                        <?php } ?>
+        
                 <div class="form-row mt-4">
                     <div class="col">
                         <input type='submit' value='Crear' class='btn btn-success' />&nbsp;
