@@ -9,6 +9,9 @@ if (!isset($_SESSION['perfil']) || $_SESSION['perfil'] != 'Admin') {
 function generarToken() {
     return bin2hex(random_bytes(32 / 2));
 }
+spl_autoload_register(function($nombre) {
+    require './class/' . $nombre . '.php';
+});
 ?>
 <!doctype html>
 <html lang="en">
@@ -44,14 +47,23 @@ function generarToken() {
                 $_SESSION['errorp']=null;
                 echo "</div>";
             }
+            //recupero todos los datos de la plataforma (nombre e imagn)
+            $conexion=new Conexion();
+            $llave=$conexion->getLlave();
+            $plataforma= new Plataformas($llave);
+            $fila=$plataforma->verPlataforma($_GET['id']);
+            $nombre=$fila->nombre;
+            $imagen=$fila->imagen;
+            //die($nombre. ", ".$imagen);
         ?>
         <div class="container mt-4" style='border: white 4px groove; padding: 8px'>
             <form name='uno' method='POST' enctype="multipart/form-data" action='storep.php' >
                 <input type='hidden' name='token' value='<?php echo $_SESSION['token']; ?>' />
                 <div class="form-row">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Nombre" name='nombre' required />
+                        <input type="text" class="form-control" value='<?php echo $nombre ?>' name='nombre' required />
                     </div>
+                    
                     <div class="col">
                         <label for="im"><b>Imagen:&nbsp;</b></label>
                         <input type="file" name='imagen' id='im' />
