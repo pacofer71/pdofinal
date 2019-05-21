@@ -33,6 +33,6 @@ $dato=$plataforma->borrarArchivoImagen($id);
 if(!(is_numeric($dato))){
     unlink($dato);
 }
-$plataforma->delete($id);
+$plataforma->delete($id);   
 $llave=null;
 mensaje("Plataforma Borrada con exito!!!");
