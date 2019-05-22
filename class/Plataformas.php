@@ -60,12 +60,43 @@ class Plataformas {
         return $plataformas;
     }
 
-    //update
+    //update----------------------------------------------------------------------------------
     public function update() {
-        
+        if(func_num_args()==3){
+            $id=func_get_arg(0);
+            $nombre=func_get_arg(1);
+            $imagen=func_get_arg(2);
+            //die("id=$id, nombre=$nombre, imagen=$imagen");
+            $update="update plataformas set nombre=:nom, imagen=:imagen where id=:cod";
+            $ima=true;
+        }
+        else{
+            $id=func_get_arg(0);
+            $nombre=func_get_arg(1);
+            $update="update plataformas set nombre=:nom where id=:cod";
+            $ima=false;
+        }
+        $stmt=$this->conexion->prepare($update);
+        try{
+            if($ima){
+                $stmt->execute([
+                    ':nom'=>$nombre,
+                    ':imagen'=>$imagen,
+                    ':cod'=>$id
+                ]);
+            }
+            else{
+                $stmt->execute([
+                    ':nom'=>$nombre,
+                    ':cod'=>$id
+                ]);
+            }
+        }catch(PDOException $ex){
+            die("Error al actualizar: ".$ex->getMessage());
+        }
     }
 
-    //delete
+    //delete------------------------------------------------------------------------
     public function delete($id) {
         $del = "delete from plataformas where id=:cod";
         $stmt = $this->conexion->prepare($del);
@@ -115,4 +146,6 @@ public function verPlataforma($id){
 
 }
 //----------------------------------------------------------------------
+
+
 }
