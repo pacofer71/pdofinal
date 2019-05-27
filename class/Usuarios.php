@@ -15,6 +15,11 @@ class Usuarios {
             //solo hemos recibido un parametro
             $this->ponerConexion(func_get_arg(0));
         }
+        if($numParam==3){
+            $this->nombre=func_get_arg(0);
+            $this->perfil=func_get_arg(1);
+            $this->mail=func_get_arg(2);
+        }
     }
 
     public function ponerConexion($con) {
@@ -54,6 +59,22 @@ class Usuarios {
             
         }
     }
+    //-----------------------------------------------------------------------------
+    public function pintarCabecera(){
+        echo "<div class='text-right' style='border: white 4px groove;'>";
+            echo "<form name='cerrar' action='cerrarSesion.php' method='POST' style='display:inline;'>";
+             echo "<b>Usuario:</b> " . $this->nombre . "&nbsp|&nbsp;";
+             echo "<b>Perfil:</b> " . $this->perfil . "&nbsp|&nbsp;";
+             echo "<b>Email:</b> " . $this->email . "&nbsp;";
+             echo "<input type='hidden' name='token' value='{$_SESSION['token']}' />";
+             echo "<input type='submit' class='btn btn-danger' value='Cerrar Session'>";
+             echo "</form>&nbsp;";
+            echo "<form name='mp' action='mperfil.php' method='POST' style='white-space:nowrap; display:inline'>";
+             echo "<input type='hidden' name='token' value='{$_SESSION['token']}' />";
+             echo "<input type='submit' value='Perfil' class='btn btn-success' />";
+             echo "</form>";
+            echo "</div>";
+    }       
 
     //-----------------------------------------------------------
 }

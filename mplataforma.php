@@ -31,16 +31,9 @@ spl_autoload_register(function ($nombre) {
 <body style="background-color: sandybrown">
     <?php
     $_SESSION['token'] = generarToken();
+    $usuario = new Usuarios($_SESSION['nombre'], $_SESSION['perfil'], $_SESSION['email']);
+    $usuario->pintarCabecera();
 
-    echo "<div class='text-right' style='border: white 4px groove;'>";
-    echo "<form name='cerrar' action='cerrarSesion.php' method='POST'>\n";
-    echo "<b>Usuario:</b> " . $_SESSION['nombre'] . "&nbsp;|&nbsp;\n";
-    echo "<b>Perfil:</b> " . $_SESSION['perfil'] . "&nbsp;|&nbsp;\n";
-    echo "<b>Email:</b> " . $_SESSION['email'] . "&nbsp;\n";
-    echo "<input type='hidden' name='token' value='{$_SESSION['token']}' />\n";
-    echo "<input type='submit' class='btn btn-danger' value='Cerrar Session'>";
-    echo "</form>\n";
-    echo "</div>";
     ?>
     <h3 class='text-center mt-3'>Modificar Plataforma</h3>
     <?php
@@ -54,7 +47,7 @@ spl_autoload_register(function ($nombre) {
     $conexion = new Conexion();
     $llave = $conexion->getLlave();
     $plataforma = new Plataformas($llave);
-    $id=$_GET['id'];
+    $id = $_GET['id'];
     $fila = $plataforma->verPlataforma($id);
     $nombre = $fila->nombre;
     $imagen = $fila->imagen;
@@ -75,7 +68,7 @@ spl_autoload_register(function ($nombre) {
                     &nbsp;&nbsp;
                     <a href='mplataforma.php?id=<?php echo $id; ?>&ima=1' class='btn btn-success'>Cambiar</a>
                 </div>
-                
+
             </div>
             <?php if (isset($_GET['ima'])) { ?>
                 <div class="from-row mt-4">

@@ -25,16 +25,11 @@ function generarToken() {
     <body style="background-color: sandybrown">
         <?php
         $_SESSION['token'] = generarToken();
-
-        echo "<div class='text-right' style='border: white 4px groove;'>";
-        echo "<form name='cerrar' action='cerrarSesion.php' method='POST'>";
-        echo "<b>Usuario:</b> " . $_SESSION['nombre'] . "&nbsp|&nbsp;";
-        echo "<b>Perfil:</b> " . $_SESSION['perfil'] . "&nbsp|&nbsp;";
-        echo "<b>Email:</b> " . $_SESSION['email'] . "&nbsp;";
-        echo "<input type='hidden' name='token' value='{$_SESSION['token']}' />";
-        echo "<input type='submit' class='btn btn-danger' value='Cerrar Session'>";
-        echo "</form>";
-        echo "</div>";
+        require 'class/Usuarios.php';
+        $usuario=new Usuarios($_SESSION['nombre'], $_SESSION['perfil'], $_SESSION['email']);
+        $usuario->pintarCabecera();
+          
+       
         ?>
         <h3 class='text-center mt-3'>Crear Plataforma</h3>
         <?php
