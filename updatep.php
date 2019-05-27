@@ -3,13 +3,13 @@
 session_start();
 function errorP($texto) {
     $_SESSION['errorp'] = $texto;
-    header('Location:mplataforma.php');
+    header("Location:mplataforma.php?id=");
     die();
 }
 
-function mensaje($texto) {
+function mensaje($texto, $id) {
     $_SESSION['mensaje'] = $texto;
-    header('Location:plataformas.php');
+    header('Location:plataformas.php?id=$id');
     die();
 }
 
@@ -33,7 +33,7 @@ $id=$_POST['id'];
 //cogemos los datos del formulario, comprobamos que el nombre no este vacio
 $nombre = trim($_POST['nombre']);
 if (strlen($nombre) == 0) {
-    errorP("El campo nombre no pueder ser vacio o nulo!!!!!!");
+    errorP("El campo nombre no pueder ser vacio o nulo!!!!!!", $id);
 }
 //Si no hemos elegido ninguna imagen dejamos la que tiene
 //en otro caso la guardaremos
@@ -47,7 +47,7 @@ if (empty($_FILES['imagen']['tmp_name'])) {
 else{
     $permitidos = ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/tiff'];
     if (!in_array($_FILES['imagen']['type'], $permitidos)) {
-        errorP("El archivo de imagen debe ser una IMAGEN!!!!!");
+        errorP("El archivo de imagen debe ser una IMAGEN!!!!!", $id);
     }
     //si todo esta bien lo guado fisicamente con un nombre unico
     //y lo insertamoes en la bbdd

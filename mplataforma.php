@@ -66,7 +66,7 @@ spl_autoload_register(function ($nombre) {
                 <div class="col">
                     <img src='<?php echo $imagen; ?>' width='100px' />
                     &nbsp;&nbsp;
-                    <a href='mplataforma.php?id=<?php echo $id; ?>&ima=1' class='btn btn-success'>Cambiar</a>
+<a href='mplataforma.php?id=<?php echo $id; ?>&ima=1' class='btn btn-success'>Cambiar</a>
                 </div>
 
             </div>
