@@ -20,7 +20,7 @@ class Usuarios
         if ($numParam == 3) {
             $this->nombre = func_get_arg(0);
             $this->perfil = func_get_arg(1);
-            $this->mail = func_get_arg(2);
+            $this->email = func_get_arg(2);
         }
     }
 
