@@ -1,9 +1,18 @@
 <?php
     session_start();
-    function generarToken(){
-        return bin2hex(random_bytes(32/2));
+    if(!isset($_SESSION['perfil'])){
+        header('Location:login.php');
+        die();
     }
-?>
+    if($_SESSION['perfil']!='Admin'){
+        header('Location:login.php');
+        die();
+    }
+    spl_autoload_register(function ($nombre) {
+        require './class/' . $nombre . '.php';
+    });
+?>    
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -16,29 +25,41 @@
     <title>Video Juegos</title>
   </head>
   <body style="background-color: sandybrown">
-      
-      <?php
-      $_SESSION['token']= generarToken();
-      if(isset($_SESSION['perfil'])){
-        require 'class/Usuarios.php';
+  <?php
         $usuario=new Usuarios($_SESSION['nombre'], $_SESSION['perfil'], $_SESSION['email']);
           $usuario->pintarCabecera();
-      }
-       ?>
-      <h3 class="text-center mt-3">Videos Juegos S.A.</h3>
-      <div class="container mt-4 text-center">
-          <a href="login.php" class="btn btn-info">Login</a>&nbsp;
-          <a href="#" class="btn btn-info">Ver Juegos</a>&nbsp;
-          <?php
-            if(isset($_SESSION['perfil'])){
-                echo "<a href='plataformas.php' class='btn btn-info'>Ver Plataformas</a>&nbsp;";
-                if($_SESSION['perfil']=='Admin'){
-                    echo "<a href='usuarios.php' class='btn btn-info'>Gestionar Usuarios</a>";
-                }
-                
-            }
-            
-          ?>
+      ?>
+      <h3 class="container mt-4 text-center">Usuarios</h3>
+      <div class="container mt-4">
+      <table class="table table-striped">
+  <thead>
+    <tr>
+    
+      <th scope="col">Nombre</th>
+      <th scope="col">Mail</th>
+      <th scope="col">Perfil</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+        $conexion = new Conexion();
+        $llave=$conexion->getLlave();
+        $usuario1=new Usuarios($llave);
+        $losusuarios=$usuario1->read();
+        foreach($losusuarios as $item){
+            echo "<tr>";
+                echo "<td>{$item->nombre}</td>";
+                echo "<td>{$item->email}</td>";
+                echo "<td>{$item->perfil}</td>";
+                echo "<td>";
+                    echo "<a href='mperfil.php?nombre={$item->nombre}' class='btn btn-warning'>Modificar</a>";
+                echo "</td>";
+            echo "</tr>";
+        }
+    ?>
+  </tbody>
+</table>
       </div>
 
     <!-- Optional JavaScript -->

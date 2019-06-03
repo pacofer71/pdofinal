@@ -65,17 +65,17 @@ class Usuarios
     public function pintarCabecera()
     {
         echo "<div class='text-right' style='border: white 4px groove;'>";
-        echo "<form name='cerrar' action='cerrarSesion.php' method='POST' style='display:inline;'>";
-        echo "<b>Usuario:</b> " . $this->nombre . "&nbsp|&nbsp;";
-        echo "<b>Perfil:</b> " . $this->perfil . "&nbsp|&nbsp;";
+        echo "<form name='cerrar' action='cerrarSesion.php' method='POST' style='display:inline;'>\n";
+        echo "<b>Usuario:</b> " . $this->nombre . "&nbsp|&nbsp;\n";
+        echo "<b>Perfil:</b> " . $this->perfil . "&nbsp|&nbsp;\n";
         echo "<b>Email:</b> " . $this->email . "&nbsp;";
-        echo "<input type='hidden' name='token' value='{$_SESSION['token']}' />";
-        echo "<input type='submit' class='btn btn-danger' value='Cerrar Session'>";
+        echo "<input type='hidden' name='token' value='{$_SESSION['token']}' />\n";
+        echo "<input type='submit' class='btn btn-danger' value='Cerrar Session'>\n";
         echo "</form>&nbsp;";
         echo "<form name='mp' action='mperfil.php' method='POST' style='white-space:nowrap; display:inline'>";
         echo "<input type='hidden' name='token' value='{$_SESSION['token']}' />\n";
         echo "<input type='hidden' name='nombre' value='{$this->nombre}' />\n";
-        echo "<input type='submit' value='Perfil' class='btn btn-success' />";
+        echo "<input type='submit' value='Perfil' class='btn btn-warning' />\n";
         echo "</form>";
         echo "</div>";
     }
@@ -83,7 +83,7 @@ class Usuarios
     //-----------------------------------------------------------
     public function mostrar($nom)
     {
-        $consulta = "select nombre, perfil, email from usuarios where nombre:n";
+        $consulta = "select nombre, perfil, email from usuarios where nombre=:n";
         $stmt = $this->conexion->prepare($consulta);
         try {
             $stmt->execute(
@@ -91,8 +91,22 @@ class Usuarios
                 ':n' => $nom
                 ]);
         } catch (PDOException $ex) {
-            die("Error al recuperar usaurio: " . $ex->getMessage());
+            die("Error al recuperar usuario: " . $ex->getMessage());
         }
         $fila=$stmt->fetch(PDO::FETCH_OBJ);
+        return $fila;
+    }
+    //------------------------------------------------------------------------------
+    public function read(){
+        $cons="select * from usuarios";
+        $stmt=$this->conexion->prepare($cons);
+        try{
+            $stmt->execute();
+        }catch(PDOException $ex){
+            die("Error al recuperar los usuarios!!!! ".$ex->getMessage());
+        }
+        $datos=$stmt->fetchAll(PDO::FETCH_OBJ);
+        return $datos;
+
     }
 }
