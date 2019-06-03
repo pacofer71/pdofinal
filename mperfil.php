@@ -56,6 +56,7 @@ spl_autoload_register(function ($nombre) {
     <div class="container mt-4">
     <form name='df' action='updateu.php' method='POST' >
         <input type='hidden' name='token' value='<?php echo $_SESSION['token'] ?>'' />
+        <input type='hidden' name='nombreV' value='<?php echo $_REQUEST['nombre'] ?>'  />
         <div class="form-group row">
     <label for="em" class="col-sm-2 col-form-label">Email</label>
     <div class="col-sm-10">
@@ -97,6 +98,12 @@ spl_autoload_register(function ($nombre) {
         echo "</select>";
     }
     ?>
+    <div class="form-row mt-4">
+                <div class="col">
+                    <input type='submit' value='Modificar' class='btn btn-success' />&nbsp;
+                    <a href='plataformas.php' class='btn btn-info'>Volver</a>
+                </div>
+            </div>
     </form>
     </div>
      <!-- Optional JavaScript -->

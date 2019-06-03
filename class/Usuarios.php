@@ -109,4 +109,12 @@ class Usuarios
         return $datos;
 
     }
+    //
+    public function isOK($nomV, $nombreF,  $emailF){
+        $con="select * from usuarios where nombre!='$nomV' and (nombre='$nombreF' or email='$emailF')";
+        $dato=$this->conexion->query($con);
+        $total=$dato->rowCount();
+        if($total==0) return true;
+        return false; 
+    }
 }
