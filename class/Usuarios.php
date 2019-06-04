@@ -117,4 +117,36 @@ class Usuarios
         if($total==0) return true;
         return false; 
     }
+    //--------------------------------------------------
+    public function update($nv, $n, $e, $p){
+        $cons="update usuarios set nombre=:n, email=:e, perfil=:p where nombre=:nv";
+        $stmt=$this->conexion->prepare($cons);
+        try{
+            $stmt->execute([
+                ':n'=>$n,
+                ':e'=>$e,
+                ':p'=>$p,
+                ':nv'=>$nv
+            ]);
+        }catch(PDOException $ex){
+            die("Error al actualizar el usuario!!!! ".$ex->getMessage());
+        }
+    }
+    public function update1($nv, $n, $e, $p, $pass){
+        $cons="update usuarios set nombre=:n, email=:e, perfil=:p, pass=:pass where nombre=:nv";
+        $stmt=$this->conexion->prepare($cons);
+        $passBuena=hash('sha224', $pass);
+        //die($passBuena);
+        try{
+            $stmt->execute([
+                ':n'=>$n,
+                ':e'=>$e,
+                ':p'=>$p,
+                ':pass'=>$passBuena,
+                ':nv'=>$nv
+            ]);
+        }catch(PDOException $ex){
+            die("Error al actualizar el usuario!!!! ".$ex->getMessage());
+        }
+    }
 }

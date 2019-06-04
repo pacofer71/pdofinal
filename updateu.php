@@ -7,7 +7,7 @@ function errorP($texto) {
     die();
 }
 
-function mensaje($texto, $id) {
+function mensaje($texto) {
     $_SESSION['mensaje'] = $texto;
     header('Location:usuarios.php');
     die();
@@ -32,6 +32,15 @@ spl_autoload_register(function($nombre) {
 $nombreV=$_POST['nombreV'];
 $nombreF=trim($_POST['nombre']);
 $email=trim($_POST['email']);
+$perfil=$_POST['perfil'];
+$pass=trim($_POST['password']);
+if($pass=="****"){
+    //el usuario no cambia el pass
+    $cambiarPass=false;
+}
+else{
+    $cambiarPass=true;
+}
 //die($nombreF.", ".$email);
 if(strlen($nombreF)==0 || strlen($email)==0){
     errorP("El nombre o el email no puden ser solo espacios en blanco !!!!!");
@@ -43,4 +52,21 @@ $dato=$usuario->isOk($nombreV, $nombreF, $email);
 if(!$dato){
     errorP("Error el usuario o el mail YA están registrados!!!!!!!!");
 }
-die("Guardando todo");
+if(!$cambiarPass){
+    $usuario->update($nombreV, $nombreF, $email, $perfil);
+}
+else{
+    $usuario->update1($nombreV, $nombreF, $email, $perfil, $pass);   
+}
+$llave=null;
+if($nombreV!=$_SESSION['nombre']){
+    mensaje("Usuario Actualizado Correctamente.");
+}
+else{
+    //el usuario modificó su propio perfil
+    //actualizo las variables de sesion y me voy a index por ejemplo
+    $_SESSION['nombre']=$nombreF;
+    $_SESSION['perfil']=$perfil;
+    $_SESSION['email']=$email;
+    header('Location:index.php');
+}    
